@@ -7,7 +7,6 @@ import { styles } from "./styles";
 
 export function Home() {
   const [participants, setParticipants] = useState<string[]>([]);
-
   const [particpantName, setParticipantName] = useState("");
 
   function handleParticipantAdd() {
@@ -23,7 +22,7 @@ export function Home() {
     Alert.alert("Remover", `Remover o participatente ${name}`, [
       {
         text: "Sim",
-        onPress: () => Alert.alert("Deletado"),
+        onPress: () => setParticipants((prevState) => prevState.filter((participant) => participant !== name)),
       },
       {
         text: "Não",
@@ -46,7 +45,7 @@ export function Home() {
       <FlatList
         data={participants}
         keyExtractor={(item) => item}
-        renderItem={({ item }) => <Participant key={item} name={item} onRemove={() => handleParticipantRemove("Rodrigo")} />}
+        renderItem={({ item }) => <Participant key={item} name={item} onRemove={() => handleParticipantRemove(item)} />}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => <Text style={styles.listEmptyText}>Ninguém chegou no evento ainda? Adicione participantes a sua lista de presença</Text>}
       />
